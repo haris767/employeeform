@@ -1,0 +1,25 @@
+<h1><%= action_name.capitalize %> Department</h1>
+
+<%= form_with model: @department, local: true do |form| %>
+  <% if @department.errors.any? %>
+    <div>
+      <h2><%= pluralize(@department.errors.count, "error") %> prohibited this department from being saved:</h2>
+      <ul>
+        <% @department.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', departments_path %>

@@ -35,7 +35,7 @@
       </ul>
       <form class="d-flex" role="search">
         <% if user_signed_in? %>
-        <%= image_tag avatar_url(current_user), class:"img-circle avatar-small"%>&nbsp;
+        
         <p class="text-center"><%= current_user.email %> </p>
         <button class="btn btn-outline-success" type="submit"><%= link_to 'Sign_Out' ,destroy_user_session_path, 
         method: :delete , data: {confirm:"Are you sure to want logout?"}%></button>
