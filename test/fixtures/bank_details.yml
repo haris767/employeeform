@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  salary_structure: MyString
+  payment_method: MyString
+  bank_name: MyString
+  bank_account_number: MyString
+
+two:
+  user: two
+  salary_structure: MyString
+  payment_method: MyString
+  bank_name: MyString
+  bank_account_number: MyString

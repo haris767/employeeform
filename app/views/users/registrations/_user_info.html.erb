@@ -1,0 +1,63 @@
+ <%# <div class="form-group"> %>
+  <%#= uif.label :profile_picture, "Upload Profile Picture" %>
+  <%#= uif.file_field :profile_picture, class: "form-control" %>
+
+  <%# if uif.object.profile_picture.attached? %>
+    <%# <div class="mt-2"> %>
+      <%#= image_tag uif.object.profile_picture.variant(resize_to_limit: [100, 100]), class: "img-thumbnail" %>
+    <%# </div> %>
+  <%# end %>
+<%# </div> %>
+
+  
+ <div class="form-group">
+      <%= uif.label :father_name %>
+      <%= uif.text_field :father_name, class: "form-control" %>
+    </div>
+
+    <div class="form-group d-none">
+    <%= uif.label :employee_code %>
+    <%= uif.text_field :employee_code, class: "form-control" %>
+  </div>
+
+
+    <div class="form-group">
+      <%= uif.label :national_id %>
+      <%= uif.text_field :national_id, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= uif.label :dob %>
+      <%= uif.date_field :dob, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+    <%= uif.label :gender %>
+    <%= uif.select :gender, UserInfo.genders.keys.map { |gender| [gender.humanize, gender] }, { prompt: "Select Gender" }, class: "form-control" %>
+   </div>
+
+
+    <div class="form-group">
+      <%= uif.label :grade %>
+      <%= uif.select :grade, UserInfo.grades.keys.map { |grade| [grade.humanize, grade] }, { prompt: "Select Grade" }, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= uif.label :phone %>
+      <%= uif.text_field :phone, class: "form-control", maxlength: 11 %>
+    </div>
+
+    <div class="form-group">
+      <%= uif.label :personal_number %>
+      <%= uif.text_field :personal_number, class: "form-control", maxlength: 11 %>
+    </div>
+
+    <div class="form-group">
+      <%= uif.label :company_number %>
+      <%= uif.text_field :company_number, class: "form-control", maxlength: 11 %>
+    </div>
+
+    <div class="form-group">
+      <%= uif.label :address %>
+      <%= uif.text_area :address, class: "form-control" %>
+    </div>

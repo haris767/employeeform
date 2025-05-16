@@ -1,0 +1,156 @@
+
+ <%#= render "devise/shared/error_messages", resource: @user %>
+
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<% if @user.errors.any? %>
+  <div class="alert alert-danger">
+    <h4><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h4>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<%= form_with(model: @user, url: update_user_path(@user), local: true, method: :put) do |f| %>
+
+  <!-- Step 1: Basic Info -->
+  <div id="basic-info-tab">
+    <h5>Basic Info</h5>
+    <%= render partial: 'basic_info', locals: { f: f } %>
+
+    <div class="text-end mt-3">
+      <button type="button" class="btn btn-primary" onclick="goToUserInfo()">Next</button>
+    </div>
+  </div>
+
+  <!-- Step 2: User Info Details -->
+  <div id="user-info-tab" style="display: none;">
+    <h5>User Info Details</h5>
+    <%= f.fields_for :user_info do |uif| %>
+      <%= render partial: 'user_info', locals: { uif: uif } %>
+    <% end %>
+
+    <div class="text-end mt-3">
+      <button type="button" class="btn btn-secondary" onclick="backToBasicInfo()">Back</button>
+      <button type="button" class="btn btn-primary" onclick="goToJobEmployment()">Next</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Job Employment -->
+  <div id="job-employment-tab" style="display: none;">
+    <h5>Job Employment Details</h5>
+    <%= f.fields_for :job_employments do |job| %>
+      <%= render partial: 'job_employment', locals: { f: job } %>
+    <% end %>
+    <div class="text-end mt-3">
+      <button type="button" class="btn btn-secondary" onclick="backToUserInfo()">Back</button>
+      <button type="button" class="btn btn-primary" onclick="goToAssetDetail()">Next</button>
+    </div>
+    </div>
+    
+     <!-- Step 3: Asset Detail -->
+  <div id="asset-detail-tab" style="display: none;">
+    <h5>Assets Details</h5>
+    <% @user.asset_details.each do |asset| %>
+      <%= f.fields_for :asset_details, asset do |asset_form| %>
+        <%= render partial: 'asset_details', locals: { f: asset_form } %>
+      <% end %>
+    <% end %>
+    <div class="text-end mt-3">
+      <button type="button" class="btn btn-secondary" onclick="backToJobEmployment()">Back</button>
+      <button type="button" class="btn btn-primary" onclick="goToBankDetail()">Next</button>
+    </div>
+    </div>
+
+      <!-- Step 3: bank Detail -->
+  <div id="bank-detail-tab" style="display: none;">
+    <h5>Bank Details</h5>
+    <% @user.bank_details.each do |bank| %>
+      <%= f.fields_for :bank_details, bank do |bank_form| %>
+        <%= render partial: 'bank_details', locals: { f: bank_form } %>
+      <% end %>
+    <% end %>
+    
+
+     <div class="mb-3">
+    <%= f.label :department_id, "Select Department" %>
+    <%= f.collection_select :department_id, Department.all, :id, :name, { prompt: "Choose Department" }, { class: "form-control" } %>
+  </div>
+
+
+   <div class="mb-3">
+    <%= f.label :roles, "Select Roles" %><br/>
+    <% Role.all.each do |role| %>
+      <%= check_box_tag "user[role_ids][]", role.id, false, id: "role_#{role.id}" %>
+      <%= label_tag "role_#{role.id}", role.name %><br/>
+    <% end %>
+  </div>
+
+
+
+    <div class="mb-3">
+      <div class="form-check">
+        <%= f.check_box :active, class: "form-check-input" %>
+        <%= f.label :active, class: "form-check-label" %>
+      </div>
+    </div>
+    
+
+    <div class="text-end mt-3">
+      <button type="button" class="btn btn-secondary" onclick="backToAssetDetail()">Back</button>
+        <%= f.submit "Update User", class: "btn btn-primary" %>
+        <%= link_to "Cancel", admin_user_list_path, class: "btn btn-secondary ml-2" %>
+    </div>
+    </div>
+     
+<% end %>
+
+<script>
+function goToUserInfo() {
+  document.getElementById('basic-info-tab').style.display = 'none';
+  document.getElementById('user-info-tab').style.display = 'block';
+}
+
+function backToBasicInfo() {
+  document.getElementById('user-info-tab').style.display = 'none';
+  document.getElementById('basic-info-tab').style.display = 'block';
+}
+
+function goToJobEmployment() {
+  document.getElementById('user-info-tab').style.display = 'none';
+  document.getElementById('job-employment-tab').style.display = 'block';
+}
+
+function backToUserInfo() {
+  document.getElementById('job-employment-tab').style.display = 'none';
+  document.getElementById('user-info-tab').style.display = 'block';
+}
+
+function backToJobEmployment() {
+  document.getElementById('asset-detail-tab').style.display = 'none';
+  document.getElementById('job-employment-tab').style.display = 'block';
+}
+
+function goToAssetDetail() {
+  document.getElementById('job-employment-tab').style.display = 'none';
+  document.getElementById('asset-detail-tab').style.display = 'block';
+}
+
+function backToAssetDetail() {
+  document.getElementById('bank-detail-tab').style.display = 'none';
+  document.getElementById('asset-detail-tab').style.display = 'block';
+}
+
+function goToBankDetail() {
+  document.getElementById('asset-detail-tab').style.display = 'none';
+  document.getElementById('bank-detail-tab').style.display = 'block';
+}
+</script>

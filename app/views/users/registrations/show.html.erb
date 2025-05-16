@@ -1,0 +1,6 @@
+<h2>User Profile</h2>
+
+<p><strong>Email:</strong> <%= @user.email %></p>
+
+<%= link_to "Edit Profile", edit_user_path(current_user), class: "btn btn-sm btn-warning" %><br>
+<%= button_to "Delete Account", destroy_user_account_path(current_user.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>

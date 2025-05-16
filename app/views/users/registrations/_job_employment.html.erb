@@ -1,0 +1,40 @@
+
+  
+    <div class="form-group">
+      <%= f.label :job_title %>
+      <%= f.text_field :job_title, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :employment_type %>
+      <%= f.select :employment_type, options_for_select(["Permanent", "Contract", "Temporary"]), {}, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :hire_date %>
+      <%= f.date_field :hire_date, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :work_location %>
+      <%= f.select :work_location, options_for_select(["Office", "Remote Location"]), {}, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :manager_name %>
+      <%= f.text_field :manager_name, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :job_status %>
+      <%= f.select :job_status, options_for_select(["Probation", "Confirmation", "Left"]), {}, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :blood_group %>
+      <%= f.select :blood_group, options_for_select(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]), {}, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :employee_service %>
+      <%= f.text_field :employee_service, class: "form-control" %>
+    </div>
+  
+

@@ -1,0 +1,21 @@
+<h1>Show view</h1>
+<div class="col-lg-12">
+<div class="card rounded-0 card mt-5 mb-5">
+<div class="card-body">
+<h2 class="text-center">Documents Detail</h2>
+<div class="row">
+<div class="col-lg-6">
+<h3 class="test-center">Personal Information</h3>
+<% if@document.image.attached?%>
+<%= image_tag @document.image %>
+<%end%>
+<p class="lead"><strong>Name</strong><%= @document.name %></p>
+<p class="lead"><strong>Document Type</strong><%= @document.doc_type %></p>
+<p class="lead"><strong>Employee name</strong><%= @document.employee.name %></p>
+</div>
+</div>
+<%= link_to 'Edit document', edit_document_path(@document), class: 'btn btn-outline-primary btn-lg'%>
+<%= link_to 'Back to Home', documents_path, class: 'btn btn-outline-primary btn-lg'%>
+</div>
+</div>
+</div>

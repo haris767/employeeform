@@ -1,0 +1,39 @@
+ <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :brand %>
+    <%= f.text_field :brand, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :model %>
+    <%= f.text_field :model, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :serial_number %>
+    <%= f.text_field :serial_number, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :assigned_date %>
+    <%= f.date_field :assigned_date, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :returned_date %>
+    <%= f.date_field :returned_date, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, options_for_select(['assigned', 'returned', 'lost', 'damaged'], f.object.status), { include_blank: false }, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :notes %>
+    <%= f.text_area :notes, class: "form-control", rows: 4 %>
+  </div>
