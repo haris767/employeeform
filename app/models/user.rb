@@ -1,5 +1,7 @@
 class User < ApplicationRecord
+  attr_accessor :skip_password_validation
   attr_accessor :current_step
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
    validates :email, :password, :name, presence: true
@@ -36,7 +38,10 @@ class User < ApplicationRecord
   with_options if: -> { current_step == "bank_details" } do
     validates_associated :bank_details
   end
-
+    def password_required?
+      return false if skip_password_validation
+      super
+    end
     def active_for_authentication? # Overriding it allows you to add your own custom condition, like checking if the user is active
      super && active?
     end

@@ -1,0 +1,5 @@
+<div class="alert alert-success rounded-xl p-4">
+  <h2 class="text-xl font-bold text-green-700">User created successfully!</h2>
+  <p>User <strong><%= user.name %></strong> has been saved with Employee Code: <%= user.user_info&.employee_code %></p>
+  <%= link_to "Back to User List", admin_user_list_path, class: "btn btn-primary mt-4" %>
+</div>
