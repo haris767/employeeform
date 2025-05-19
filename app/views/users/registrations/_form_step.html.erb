@@ -123,43 +123,4 @@ end %>
     </div>
   <% end %>
 
-  <%= form_with model: user,
-        url: (mode == :edit ? update_user_path(user, step: step) : create_user_by_admin_path(step: step)),
-        method: (mode == :edit ? :patch : :post),
-        data: { turbo_frame: "user_form" }, local: false do |f| %>
-
-    <% case step %>
-    <% when "basic_info" %>
-      <%= render partial: 'basic_info', locals: { f: f } %>
-      <%= f.submit "Next" %>
-
-    <% when "user_info" %>
-      <% if user.user_info.nil? %>
-        <p>User info is nil</p>
-      <% else %>
-        <%= f.fields_for :user_info do |uif| %>
-          <%= render partial: 'user_info', locals: { uif: uif } %>
-        <% end %>
-      <% end %>
-      <%= f.submit "Next" %>
-
-    <% when "job_employment" %>
-      <%= f.fields_for :job_employments do |job| %>
-        <%= render partial: 'job_employment', locals: { f: job } %>
-      <% end %>
-      <%= f.submit "Next" %>
-
-    <% when "asset_details" %>
-      <%= f.fields_for :asset_details do |asset| %>
-        <%= render partial: 'asset_details', locals: { f: asset } %>
-      <% end %>
-      <%= f.submit "Next" %>
-
-    <% when "bank_details" %>
-      <%= f.fields_for :bank_details do |bank| %>
-        <%= render partial: 'bank_details', locals: { f: bank } %>
-      <% end %>
-      <%= f.submit (mode == :edit ? "Update User" : "Create User") %>
-    <% end %>
-  <% end %>
-</turbo-frame>
+  
