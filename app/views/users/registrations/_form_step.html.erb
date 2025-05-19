@@ -1,0 +1,81 @@
+<turbo-frame id="user_form">
+<% filtered_errors = case step
+when "basic_info"
+  user.errors.to_hash.slice(:name, :email, :password)
+when "user_info"
+  user.user_info&.errors || ActiveModel::Errors.new(UserInfo.new)
+when "job_employment"
+  user.job_employments.map(&:errors).reject(&:empty?)
+when "asset_details"
+  user.asset_details.map(&:errors).reject(&:empty?)
+when "bank_details"
+  user.bank_details.map(&:errors).reject(&:empty?)
+else
+  []
+end %>
+
+<% if filtered_errors.present? %>
+  <div class="alert alert-danger">
+    <ul>
+      <% if filtered_errors.is_a?(Hash) %>
+        <% filtered_errors.each do |field, messages| %>
+          <% Array(messages).each do |msg| %>
+            <li><%= "#{field.to_s.humanize} #{msg}" %></li>
+          <% end %>
+        <% end %>
+      <% elsif filtered_errors.is_a?(Array) %>
+        <% filtered_errors.each do |error_set| %>
+          <% if error_set.respond_to?(:full_messages) %>
+            <% error_set.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% elsif filtered_errors.respond_to?(:full_messages) %>
+        <% filtered_errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+    <%= form_with model: user, url: create_user_by_admin_path(step: step), 
+              data: { turbo_frame: "user_form" }, local: false do |f| %>
+
+  <% case step %>
+  <% when "basic_info" %>
+    <%= render partial: 'basic_info', locals: { f: f } %>
+    <%= f.submit "Next" %>
+
+  <% when "user_info" %>
+    <% if user.user_info.nil? %>
+    <p>User info is nil</p>
+    <% else %>
+    <%= f.fields_for :user_info do |uif| %>
+      <%= render partial: 'user_info', locals: { uif: uif } %>
+    <% end %>
+    <% end %>
+  <%= f.submit "Next" %>
+
+  <% when "job_employment" %>
+    <%= f.fields_for :job_employments do |job| %>
+      <%= render partial: 'job_employment', locals: { f: job } %>
+    <% end %>
+    <%= f.submit "Next" %>
+
+  <% when "asset_details" %>
+    <%= f.fields_for :asset_details do |asset| %>
+      <%= render partial: 'asset_details', locals: { f: asset } %>
+    <% end %>
+    <%= f.submit "Next" %>
+
+  <% when "bank_details" %>
+    <%= f.fields_for :bank_details do |bank| %>
+      <%= render partial: 'bank_details', locals: { f: bank } %>
+    <% end %>
+    <%= f.submit "Create User" %>
+  <% end %>
+<% end %>
+</turbo-frame>

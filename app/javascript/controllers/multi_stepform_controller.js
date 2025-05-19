@@ -24,7 +24,13 @@ export default class extends Controller {
 
   showStep() {
     this.stepTargets.forEach((el, index) => {
-      el.hidden = index !== this.currentStep
-    })
+    const isActive = index === this.currentStep;
+    el.hidden = !isActive;
+
+    // Disable all inputs in inactive steps
+    el.querySelectorAll("input, select, textarea, button").forEach(input => {
+      input.disabled = !isActive;
+    });
+  });
   }
 }

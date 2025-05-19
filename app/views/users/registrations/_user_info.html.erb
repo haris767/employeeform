@@ -1,15 +1,16 @@
- <%# <div class="form-group"> %>
-  <%#= uif.label :profile_picture, "Upload Profile Picture" %>
-  <%#= uif.file_field :profile_picture, class: "form-control" %>
+#  <%# <div class="form-group"> %>
+#   <%#= uif.label :profile_picture, "Upload Profile Picture" %>
+#   <%#= uif.file_field :profile_picture, class: "form-control" %>
 
-  <%# if uif.object.profile_picture.attached? %>
-    <%# <div class="mt-2"> %>
-      <%#= image_tag uif.object.profile_picture.variant(resize_to_limit: [100, 100]), class: "img-thumbnail" %>
-    <%# </div> %>
-  <%# end %>
-<%# </div> %>
+#   <%# if uif.object.profile_picture.attached? %>
+#     <%# <div class="mt-2"> %>
+#       <%#= image_tag uif.object.profile_picture.variant(resize_to_limit: [100, 100]), class: "img-thumbnail" %>
+#     <%# </div> %>
+#   <%# end %>
+# <%# </div> %>
 
-  
+ 
+
  <div class="form-group">
       <%= uif.label :father_name %>
       <%= uif.text_field :father_name, class: "form-control" %>
@@ -61,3 +62,4 @@
       <%= uif.label :address %>
       <%= uif.text_area :address, class: "form-control" %>
     </div>
+
