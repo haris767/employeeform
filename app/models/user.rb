@@ -42,6 +42,7 @@ class User < ApplicationRecord
       return false if skip_password_validation
       super
     end
+  
     def active_for_authentication? # Overriding it allows you to add your own custom condition, like checking if the user is active
      super && active?
     end

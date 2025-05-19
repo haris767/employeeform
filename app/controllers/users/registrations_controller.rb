@@ -107,22 +107,65 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # Admin: edit user form
   def edit
+    @step = params[:step] || "basic_info"
     @user = User.find(params[:id])
+
     @user.build_user_info if @user.user_info.blank?
-    @user.bank_details.build if @user.bank_details.blank?
     @user.job_employments.build if @user.job_employments.blank?
     @user.asset_details.build if @user.asset_details.blank?
+    @user.bank_details.build if @user.bank_details.blank?
+
+    render turbo_stream: turbo_stream.replace(
+      "user_form",
+      partial: "users/registrations/form_step",
+      locals: { user: @user, step: @step, mode: :edit }
+    )
   end
+
 
   # Admin: update user action
   def update
+    @step = params[:step] || "basic_info"
     @user = User.find(params[:id])
+
+    unless step_allowed?(@step)
+      first_incomplete = first_incomplete_step
+      return redirect_to edit_user_user_path(@user, step: first_incomplete), alert: "Please complete previous steps first."
+    end
+
     if @user.update(user_params)
-      redirect_to admin_user_list_path, notice: "User updated successfully."
+      mark_step_completed(@step)
+
+      next_step_name = next_step(@step)
+
+      if next_step_name
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace(
+              "user_form",
+              partial: "users/registrations/form_step",
+              locals: { user: @user, step: next_step_name, mode: :edit }
+            )
+          end
+          format.html { redirect_to edit_user_user_path(@user, step: next_step_name) }
+        end
+      else
+        redirect_to admin_user_list_path, notice: "User updated successfully"
+      end
     else
-      render :edit
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            "user_form",
+            partial: "users/registrations/form_step",
+            locals: { user: @user, step: @step, mode: :edit }
+          )
+        end
+        format.html { render :edit }
+      end
     end
   end
+
 
   # Admin: delete user
   def destroy
