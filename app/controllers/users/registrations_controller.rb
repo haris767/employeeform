@@ -105,65 +105,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
 
 
-  
-
-  
-
-  # def create_user
-  #   @step = params[:step] || "basic_info"
-  #   @user = User.new(user_params)
-
-  #   # Set the current step for validations
-  #   @user.current_step = @step
-
-  #   # Build nested attributes for the next step if not present
-  #   @user.build_user_info if @user.user_info.nil?
-  #   @user.job_employments.build if @user.job_employments.blank?
-  #   @user.asset_details.build if @user.asset_details.blank?
-  #   @user.bank_details.build if @user.bank_details.blank?
-
-  #   unless step_allowed?(@step)
-  #     first_incomplete = first_incomplete_step
-  #     return redirect_to new_user_by_admin_path(step: first_incomplete), alert: "Please complete previous steps first."
-  #   end
-
-  #   if validate_step(@user, @step)
-  #     mark_step_completed(@step) # Mark this step as completed
-  #     next_step_name = next_step(@step)
-
-  #     if next_step_name
-  #       respond_to do |format|
-  #         format.turbo_stream do
-  #           render turbo_stream: turbo_stream.replace(
-  #             "user_form",
-  #             partial: "users/registrations/form_step",
-  #             locals: { user: @user, step: next_step_name }
-  #           )
-  #         end
-  #         format.html { redirect_to new_user_path(step: next_step_name) }
-  #       end
-  #     else
-        
-  #       @user.save!
-  #       redirect_to admin_user_list_path, notice: "User created successfully"
-  #     end
-  #   else
-  #     respond_to do |format|
-  #       format.turbo_stream do
-  #         render turbo_stream: turbo_stream.replace(
-  #           "user_form",
-  #           partial: "users/registrations/form_step",
-  #           locals: { user: @user, step: @step }  # keep current step on failure
-  #         )
-  #       end
-  #       format.html { render :new_user }
-  #     end
-  #   end
-
-  #   Rails.logger.debug "Step: #{@step}, Valid?: #{@user.errors.blank?}"
-  # end
-
-
   # Admin: edit user form
   def edit
     @user = User.find(params[:id])
